@@ -15,6 +15,7 @@
  */
 package bridgelabz.service;
 
+import bridgelabz.exception.EmployeePayrollValidation;
 import bridgelabz.model.EmployeePayrollData;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class EmployeePayrollService {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws EmployeePayrollValidation {
 
         ArrayList<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 
@@ -52,21 +53,25 @@ public class EmployeePayrollService {
         System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
     }
 
-    private void readEmployeePayrollData(Scanner consoleInputReader) {
+    private void readEmployeePayrollData(Scanner consoleInputReader) throws EmployeePayrollValidation {
+        try {
 
-        System.out.println("Enter Employee ID: ");
+            System.out.println("Enter Employee ID: ");
 
-        int id = consoleInputReader.nextInt();
+            int id = consoleInputReader.nextInt();
 
-        System.out.println("Enter Employee Name: ");
+            System.out.println("Enter Employee Name: ");
 
-        String name = consoleInputReader.next();
+            String name = consoleInputReader.next();
 
-        System.out.println("Enter Employee Salary: ");
+            System.out.println("Enter Employee Salary: ");
 
-        double salary = consoleInputReader.nextDouble();
+            double salary = consoleInputReader.nextDouble();
 
-        employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+            employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+        } catch (Exception e) {
+            throw new EmployeePayrollValidation(e.getMessage());
+        }
 
     }
 
