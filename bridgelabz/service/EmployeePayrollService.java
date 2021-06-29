@@ -11,7 +11,8 @@
  *
  * @author Dhiraj
  * @version 1.0
- * @since 29-06-2021 **********************************************************
+ * @since 29-06-2021
+ * ****************************************************************************
  */
 package bridgelabz.service;
 
@@ -43,30 +44,39 @@ public class EmployeePayrollService {
 
         EmployeePayrollService employeePayrollService = new EmployeePayrollService(employeePayrollList);
 
-        Scanner consoleInputReader = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        employeePayrollService.readEmployeePayrollData(consoleInputReader);
+        employeePayrollService.readEmployeePayrollData(scanner);
         employeePayrollService.writeEmployeePayrollData();
     }
 
+    /**
+     * Method for writing employee payroll data into console.
+     */
     private void writeEmployeePayrollData() {
         System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
     }
 
-    private void readEmployeePayrollData(Scanner consoleInputReader) throws EmployeePayrollValidation {
+    /**
+     * Method for taking the employee payroll data through console.
+     *
+     * @param scanner
+     * @throws EmployeePayrollValidation : Custom exception
+     */
+    private void readEmployeePayrollData(Scanner scanner) throws EmployeePayrollValidation {
         try {
 
             System.out.println("Enter Employee ID: ");
 
-            int id = consoleInputReader.nextInt();
+            int id = scanner.nextInt();
 
             System.out.println("Enter Employee Name: ");
 
-            String name = consoleInputReader.next();
+            String name = scanner.next();
 
             System.out.println("Enter Employee Salary: ");
 
-            double salary = consoleInputReader.nextDouble();
+            double salary = scanner.nextDouble();
 
             employeePayrollList.add(new EmployeePayrollData(id, name, salary));
         } catch (Exception e) {
