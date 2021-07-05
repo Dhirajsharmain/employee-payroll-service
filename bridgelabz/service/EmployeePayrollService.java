@@ -60,7 +60,9 @@ public class EmployeePayrollService {
     }
 
     /**
-     * Method for writing employee payroll data into console.
+     * Method for writing employee payroll data.
+     * @param serviceType : console_io or File_io
+     * @throws EmployeePayrollValidation
      */
     public void writeEmployeePayrollData(ServiceType serviceType) throws EmployeePayrollValidation {
 
@@ -99,6 +101,10 @@ public class EmployeePayrollService {
 
     }
 
+    /**
+     * Method for printing data from file
+     * @throws EmployeePayrollValidation
+     */
     public void printData() throws EmployeePayrollValidation {
         try {
             Files.lines(new File("payroll-file.txt").toPath()).forEach(System.out::println);
@@ -108,6 +114,11 @@ public class EmployeePayrollService {
     }
 
 
+    /**
+     * Method for count the entities in file
+     * @return
+     * @throws EmployeePayrollValidation
+     */
     public long countEntries() throws EmployeePayrollValidation {
         long entries = 0;
         try {

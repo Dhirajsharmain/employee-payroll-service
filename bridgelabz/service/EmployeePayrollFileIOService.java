@@ -14,7 +14,7 @@ public class EmployeePayrollFileIOService {
     /**
      * Method for writing the data into txt file.
      *
-     * @param employeePayrollList
+     * @param employeePayrollList : employee payroll data
      * @throws EmployeePayrollValidation
      */
     public void writeIntoFile(List<EmployeePayrollData> employeePayrollList) throws EmployeePayrollValidation {

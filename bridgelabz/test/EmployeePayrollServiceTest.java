@@ -63,7 +63,6 @@ public class EmployeePayrollServiceTest {
     }
 
     @Test
-
     public void given3EmployeesWhenWrittenToFileShouldMatchEmployeeEntries() throws EmployeePayrollValidation {
 
         EmployeePayrollData[] array0fEmps = {
