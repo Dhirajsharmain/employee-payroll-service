@@ -52,7 +52,7 @@ public class EmployeePayrollService {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(employeePayrollService.isExists("E:\\BridgeLabs Training\\demo2"));
-        employeePayrollService.readEmployeePayrollData(scanner);
+        employeePayrollService.readEmployeePayrollData(scanner, ServiceType.FILE_IO);
         employeePayrollService.writeEmployeePayrollData(ServiceType.FILE_IO);
 
         employeePayrollService.listFileAndDirectories("E:\\BridgeLabs Training\\demo2");
@@ -84,17 +84,26 @@ public class EmployeePayrollService {
      * @param scanner
      * @throws EmployeePayrollValidation : Custom exception
      */
-    private void readEmployeePayrollData(Scanner scanner) throws EmployeePayrollValidation {
+    private void readEmployeePayrollData(Scanner scanner, ServiceType serviceType) throws EmployeePayrollValidation {
         try {
 
-            System.out.println("Enter Employee ID: ");
-            int id = scanner.nextInt();
-            System.out.println("Enter Employee Name: ");
-            String name = scanner.next();
-            System.out.println("Enter Employee Salary: ");
-            double salary = scanner.nextDouble();
+            switch (serviceType) {
+                case FILE_IO:
+                    EmployeePayrollFileIOService employeePayrollFileIOService = new EmployeePayrollFileIOService();
+                    employeePayrollFileIOService.readFromFile();
+                    break;
+                case CONSOLE_IO:
+                    System.out.print("Enter Employee ID: ");
+                    int id = scanner.nextInt();
+                    System.out.print("Enter Employee Name: ");
+                    String name = scanner.next();
+                    System.out.print("Enter Employee Salary: ");
+                    double salary = scanner.nextDouble();
 
-            employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+                    employeePayrollList.add(new EmployeePayrollData(id, name, salary));
+                default:
+                    break;
+            }
         } catch (Exception e) {
             throw new EmployeePayrollValidation(e.getMessage());
         }

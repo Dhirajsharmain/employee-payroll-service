@@ -4,8 +4,10 @@ import bridgelabz.exception.EmployeePayrollValidation;
 import bridgelabz.model.EmployeePayrollData;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 public class EmployeePayrollFileIOService {
@@ -29,4 +31,17 @@ public class EmployeePayrollFileIOService {
             throw new EmployeePayrollValidation(e.getMessage());
         }
     }
+
+    public List<String> readFromFile() throws IOException {
+
+        List<String> lines = Collections.emptyList();
+        try {
+            lines = Files.readAllLines(Paths.get( PAYROLL_FILE_NAME), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
 }
+
