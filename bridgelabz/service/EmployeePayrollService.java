@@ -18,6 +18,7 @@ package bridgelabz.service;
 
 import bridgelabz.exception.EmployeePayrollValidation;
 import bridgelabz.model.EmployeePayrollData;
+import bridgelabz.model.ServiceType;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class EmployeePayrollService {
-    private List<EmployeePayrollData> employeePayrollList;
+    private List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 
     public EmployeePayrollService() {
     }
@@ -52,7 +53,7 @@ public class EmployeePayrollService {
 
         System.out.println(employeePayrollService.isExists("E:\\BridgeLabs Training\\demo2"));
         employeePayrollService.readEmployeePayrollData(scanner);
-        employeePayrollService.writeEmployeePayrollData();
+        employeePayrollService.writeEmployeePayrollData(ServiceType.FILE_IO);
 
         employeePayrollService.listFileAndDirectories("E:\\BridgeLabs Training\\demo2");
         employeePayrollService.createFile("E:\\BridgeLabs Training\\demo2", "Myfile");
@@ -61,8 +62,18 @@ public class EmployeePayrollService {
     /**
      * Method for writing employee payroll data into console.
      */
-    private void writeEmployeePayrollData() {
-        System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
+    public void writeEmployeePayrollData(ServiceType serviceType) throws EmployeePayrollValidation {
+
+        switch (serviceType) {
+            case FILE_IO:
+                EmployeePayrollFileIOService employeePayrollFileIOService = new EmployeePayrollFileIOService();
+                employeePayrollFileIOService.writeIntoFile(employeePayrollList);
+                break;
+            case CONSOLE_IO:
+                System.out.println("\nWriting Employee Payroll Roaster to Console\n" + employeePayrollList);
+            default:
+                break;
+        }
     }
 
     /**
@@ -88,8 +99,28 @@ public class EmployeePayrollService {
 
     }
 
+    public void printData() throws EmployeePayrollValidation {
+        try {
+            Files.lines(new File("payroll-file.txt").toPath()).forEach(System.out::println);
+        } catch (IOException e) {
+            throw new EmployeePayrollValidation(e.getMessage());
+        }
+    }
+
+
+    public long countEntries() throws EmployeePayrollValidation {
+        long entries = 0;
+        try {
+            entries = Files.lines(new File("payroll-file.txt").toPath()).count();
+        } catch (IOException e) {
+            throw new EmployeePayrollValidation(e.getMessage());
+        }
+        return entries;
+    }
+
     /**
      * Method for deleting file form directory.
+     *
      * @param contentToDelete :
      * @return : tru or false
      */
@@ -104,6 +135,7 @@ public class EmployeePayrollService {
 
     /**
      * Method for delete files recursively  from a directory.
+     *
      * @param address : directory path
      * @return : true or false
      */
@@ -164,6 +196,7 @@ public class EmployeePayrollService {
 
     /**
      * Method for find out the total files and folder at a particular directory.
+     *
      * @param path : path for a directory
      * @return : count of file and folders exists.
      * @throws EmployeePayrollValidation
